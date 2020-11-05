@@ -1,3 +1,4 @@
 *.cpp
 *.exe
 *.out
+node_modules
