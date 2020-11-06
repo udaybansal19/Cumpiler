@@ -1,6 +1,7 @@
 const express = require('express');
 const writeFile = require("./writeToFile.js");
 const compileCode = require("./compileC++.js");
+const runCode = require("./runC++.js");
 const routes = express.Router();
 
 routes.use(express.json());
@@ -12,8 +13,8 @@ routes.get('/', (req, res) => {
 routes.post('/', (req, res) => {
   writeFile.writeCodeToFile(req.body.code);
   compileCode.compileCode();
-  
-  return res.send('Received a POST HTTP method');
+  //runCode.runCode();
+  return res.send(runCode.runCode());
 });
  
 routes.put('/', (req, res) => {
