@@ -1,15 +1,19 @@
 const { spawn } = require('child_process');
 
-const gPlus = spawn('g++', ['/mnt/c/Users/dell/Downloads/cumpile/main.cpp']);
+module.exports.compileCode = function() {
 
-gPlus.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
+  const gPlus = spawn('g++', ['./test.cpp']);
 
-gPlus.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
+  gPlus.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
 
-gPlus.on('close', (code) => {
-  console.log(`Code Compiled with code ${code}`);
-});
+  gPlus.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  gPlus.on('close', (code) => {
+    returnCode = code;
+    console.log(`Code Compiled with code ${code}`);
+  });
+}

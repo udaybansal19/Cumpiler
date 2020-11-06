@@ -1,11 +1,18 @@
- 
-const routes = require('express').Router();
- 
+const express = require('express');
+const writeFile = require("./writeToFile.js");
+const compileCode = require("./compileC++.js");
+const routes = express.Router();
+
+routes.use(express.json());
+
 routes.get('/', (req, res) => {
   return res.send('Received a GET HTTP method');
 });
  
 routes.post('/', (req, res) => {
+  writeFile.writeCodeToFile(req.body.code);
+  compileCode.compileCode();
+  
   return res.send('Received a POST HTTP method');
 });
  
