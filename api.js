@@ -4,8 +4,8 @@ const compileCode  = require("./compileC++.js");
 const runCode = require("./runC++.js");
 const routes = express.Router();
 
-const compileOutput = require('./compileC++').compileOutput;
-const codeOutput = require('./runC++').codeOutput;
+const getCompileOutput = require('./compileC++').getCompileOutput;
+const getCodeOutput = require('./runC++').getCodeOutput;
 
 global.postApiFunc;
 
@@ -32,25 +32,44 @@ function postApi(req,res) {
 
 function* postApiFuncUtil (req, res) {
   console.log("starting...");
+
   writeFile.writeCodeToFile(req.body.code);
+
   yield;
+
   compileCode.compileCode();
+
   yield;
-  var compileResult = compileOutput();
-    console.log("Compile Result: " + compileResult.compileStatus);
-    var reqOutput;
+
+  var compileResult = getCompileOutput();
+  console.log("Compile Result: " + compileResult.compileStatus);
+   var reqOutput;
+
   if(compileResult.compileStatus){
-    runCode.runCode();
+
+    runCode.runCode(req.body.input);
     yield;
-    var codeStdOutput = codeOutput();
-    console.log("Code Std output: " + codeStdOutput);
-    reqOutput = {
-      codeCompiledCode: compileResult.compileStatus,
-      output: `${codeStdOutput}`,
+
+    var codeOutput = getCodeOutput();
+
+    if(codeOutput.codeStatus){
+      reqOutput = {
+        Code_Compiled: compileResult.compileStatus,
+        codeStatus: codeOutput.codeStatus,
+        output: `${codeOutput.codeOutput}`,
+      }
+    }else{
+      reqOutput = {
+        Code_Compiled: compileResult.compileStatus,
+        codeStatus: codeOutput.codeStatus,
+        message: "Code timed out",
+      }
     }
+
+
   }else{
     reqOutput = {
-      codeCompiledCode: compileResult.compileStatus,
+      Code_Compiled: compileResult.compileStatus,
       error: compileResult.compileOutput,
     }
   }

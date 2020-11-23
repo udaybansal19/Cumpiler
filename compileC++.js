@@ -1,6 +1,4 @@
 const { spawn } = require('child_process');
-const { resolve } = require('path');
-const { stdout } = require('process');
 
 var compileOutput;
 var compileStatus;
@@ -28,7 +26,7 @@ module.exports.compileCode = function() {
   
 }
 
-module.exports.compileOutput = function() {
+module.exports.getCompileOutput = function() {
   return {
     compileStatus: compileStatus,
     compileOutput: compileOutput
