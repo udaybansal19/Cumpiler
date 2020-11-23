@@ -1,12 +1,14 @@
 const { spawn } = require('child_process');
 
-var compileOutput = "";
+var compileOutput;
 var compileStatus;
 
 module.exports.compileCode = function() {
   
   const gPlus = spawn('g++', ['./test.cpp']);
   console.log("G++ running...");
+
+  compileOutput = "";
 
   gPlus.stderr.on('data', (data) => {
     compileOutput += "" +  data; 

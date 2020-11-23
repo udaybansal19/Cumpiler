@@ -1,11 +1,15 @@
 const { spawn } = require('child_process');
 
-var codeOutput = "";
-var codeStatus = false;
+var codeOutput;
+var codeStatus;
+
 module.exports.runCode = function(input) {
 
   const run = spawn('a.exe');
   console.log("Code starting to run...");
+  
+  codeOutput = "";
+  codeStatus = false;
 
   setTimeout( () => {
     if(codeStatus == false){
