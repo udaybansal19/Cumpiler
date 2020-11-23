@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-var compileOutput;
+var compileOutput = "";
 var compileStatus;
 
 module.exports.compileCode = function() {
@@ -9,7 +9,7 @@ module.exports.compileCode = function() {
   console.log("G++ running...");
 
   gPlus.stderr.on('data', (data) => {
-    compileOutput = "" +  data; 
+    compileOutput += "" +  data; 
     console.error(`stderr: ${data}`);
   });
   
@@ -20,7 +20,7 @@ module.exports.compileCode = function() {
   });
 
   gPlus.stdout.on('data', (data) => {
-    compileOutput = data;
+    compileOutput += "" +  data; 
     console.log(`stdout: ${data}`);
   });
   

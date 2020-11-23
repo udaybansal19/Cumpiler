@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-var codeOutput;
+var codeOutput = "";
 var codeStatus = false;
 module.exports.runCode = function(input) {
 
@@ -16,12 +16,13 @@ module.exports.runCode = function(input) {
     }
   },10000);
 
-  run.stdout.on('data', (data) => {
-    codeOutput = data;
+  run.stdout.once('data', (data) => {
+    codeOutput += "" + data;
     console.log(`stdout: ${data}`);
   });
 
   run.stderr.on('data', (data) => {
+    codeOutput += "" + data;
     console.error(`stderr: ${data}`);
   });
 
@@ -30,7 +31,7 @@ module.exports.runCode = function(input) {
     if(code == null)
       codeStatus = false;
     else
-      codeStatus = !code;
+      codeStatus = true;
     postApiFunc.next();
   });
 
