@@ -37,10 +37,10 @@ function* postApiFuncUtil (req, res) {
   compileCode.compileCode();
   yield;
   var compileResult = compileOutput();
-    console.log("Compile Result: " + compileResult);
-    runCode.runCode();
+    console.log("Compile Result: " + compileResult.compileStatus);
     var reqOutput;
   if(compileResult.compileStatus){
+    runCode.runCode();
     yield;
     var codeStdOutput = codeOutput();
     console.log("Code Std output: " + codeStdOutput);
