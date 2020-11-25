@@ -32,6 +32,22 @@ describe("POST Api /runCode", function() {
       });
     });
 
+    it("Check for <bits/stdc++.h>", function (done) {
+
+      apiRequest.body = JSON.stringify({"language":"c++","code":"#include<bits/stdc++.h> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\"; \n}"})
+      
+      request(apiRequest, function (error, response) {
+        if (error) throw new Error(error);
+        var res = JSON.parse(response.body);
+        if( res.should.have.property('output') ){
+  
+          expect(res.output).to.equal("Hello World!!");
+          
+          done();
+        }
+      });
+    });
+
     it("Code returns 0", function (done) {
 
       apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\";\n return 0; \n}"})
@@ -65,8 +81,42 @@ describe("POST Api /runCode", function() {
     });
   });
 
+  describe('Test for Inputs', function() {
+
+    it('Single Line Integer Input', function(done) {
+      apiRequest.body = JSON.stringify({"language":"c++","input":"11\n","code":"#include<iostream> \n using namespace std; \n int main() { \n int n; \n cin>>n; \n cout<<n; \n}"})
+      
+      request(apiRequest, function (error, response) {
+        if (error) throw new Error(error);
+        var res = JSON.parse(response.body);
+        if( res.should.have.property('output') ){
+  
+          expect(res.output).to.equal("11");
+          
+          done();
+        }
+      });
+    });
+
+    it('Single Line String Input without space', function(done) {
+      apiRequest.body = JSON.stringify({"language":"c++","input":"Hello\n","code":"#include<iostream> \n using namespace std; \n int main() { \n string n; \n cin>>n; \n cout<<n; \n}"})
+      
+      request(apiRequest, function (error, response) {
+        if (error) throw new Error(error);
+        var res = JSON.parse(response.body);
+        if( res.should.have.property('output') ){
+  
+          expect(res.output).to.equal("Hello");
+          
+          done();
+        }
+      });
+    });
+
+  });
+
   describe('Compile error', function() {
-    it("Test for compile error code", function (done) {
+    it("Test for compile time error", function (done) {
 
       apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostrem> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\"; \n}"})
       

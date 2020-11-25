@@ -5,20 +5,14 @@ var codeStatus;
 
 module.exports.runCode = function(input) {
 
-  const run = spawn('a.exe');
+  var run = spawn('a.exe');
   console.log("Code starting to run...");
-  
+
   codeOutput = "";
   codeStatus = false;
 
-  setTimeout( () => {
-    if(codeStatus == false){
-      console.log("Code taking too long to execute");
-      console.log("killing code");
-      
-      run.kill('SIGINT');
-    }
-  },10000);
+  if(input !== undefined)
+    run.stdin.write(input);
 
   run.stdout.once('data', (data) => {
     codeOutput += "" + data;
@@ -38,6 +32,15 @@ module.exports.runCode = function(input) {
       codeStatus = true;
     postApiFunc.next();
   });
+
+  setTimeout( () => {
+    if(codeStatus == false){
+      console.log("Code taking too long to execute");
+      console.log("killing code");
+      
+      run.kill('SIGINT');
+    }
+  },10000);
 
 }
 

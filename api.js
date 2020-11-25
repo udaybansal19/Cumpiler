@@ -33,8 +33,7 @@ function postApi(req,res) {
 function* postApiFuncUtil (req, res) {
   console.log("starting...");
 
-  writeFile.writeCodeToFile(req.body.code);
-
+  writeFile.writeCodeToFile(req.body.code, 'test.cpp');
   yield;
 
   compileCode.compileCode();
