@@ -162,4 +162,44 @@ describe("POST Api /runCode", function() {
   });
  });
 
+ describe('Handling simultaneous requests', function() {
+	 
+	 it('10 Simultaneous Requests', function(done) {
+		for(var i=1;i<10;i++){
+			let temp = i;
+			request(newCode(temp), function (error, response) {
+				if (error) throw new Error(error);
+				var res = JSON.parse(response.body);
+				if( res.should.have.property('output') ){
+
+				expect(res.output).to.equal('' + temp);
+	
+				}
+			});
+		}
+		request(newCode(0), function (error, response) {
+			if (error) throw new Error(error);
+			var res = JSON.parse(response.body);
+			if( res.should.have.property('output') ){
+
+			expect(res.output).to.equal('' + 0);
+			done();
+
+			}
+		});
+	});
+ });
+
 });
+
+function newCode(seed){
+	let apiRequest = {
+		'method': 'POST',
+		'url': 'http://localhost:3000/runCode',
+		'headers': {
+		  'Content-Type': 'application/json'
+		}
+	  };
+	apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n cout<<" + seed + "; \n}"});
+	return apiRequest;  
+}
