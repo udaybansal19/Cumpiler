@@ -4,7 +4,7 @@ const compileCode  = require("./compileC++.js");
 const runCode = require("./runC++.js");
 const routes = express.Router();
 
-var count = 0;
+let count = 0;
 
 routes.use(express.json());
  
@@ -13,19 +13,19 @@ routes.post('/', postApiFuncUtil);
 async function postApiFuncUtil (req, res) {
   console.log("starting...");
   
-  var id = ++count;
+  let id = ++count;
 
   await writeFile.writeCodeToFile(req.body.code, id);
   
-  var compileResult = await compileCode.compileCode(id);
+  let compileResult = await compileCode.compileCode(id);
   
 
   console.log("Compile Result: " + compileResult.status);
-  var reqOutput;
+  let reqOutput;
 
   if(compileResult.status){
 
-    var codeOutput = await runCode.runCode(req.body.input, id);
+    let codeOutput = await runCode.runCode(req.body.input, id);
 
     if(codeOutput.status){
       reqOutput = {

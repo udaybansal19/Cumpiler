@@ -1,5 +1,5 @@
 const { spawn } = require('child_process');
-var fs = require("fs");
+let fs = require("fs");
 
 module.exports.compileCode = function(id) {
 
@@ -7,7 +7,7 @@ module.exports.compileCode = function(id) {
     const gPlus = spawn('g++', ['./codeFiles/' + id + '.cpp', '-o', './executables/' + id + '.exe']);
     console.log("G++ running...");
 
-    var compileResult = {
+    let compileResult = {
       status: false,
       output: ""
     };

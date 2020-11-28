@@ -1,13 +1,13 @@
 const { spawn } = require('child_process');
-var fs = require("fs");
+let fs = require("fs");
 
 module.exports.runCode = function(input, id) {
 
   return new Promise( (resolve, reject) => {
-    var run = spawn('./executables/' + id + '.exe');
+    let run = spawn('./executables/' + id + '.exe');
     console.log("Code starting to run...");
 
-    var codeResult = {
+    let codeResult = {
       output: "",
       status: false
     };

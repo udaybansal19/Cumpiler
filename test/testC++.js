@@ -1,9 +1,9 @@
-var request = require("request");
-var chai = require("chai");
-var expect = chai.expect;
-var should = chai.should();
+let request = require("request");
+let chai = require("chai");
+let expect = chai.expect;
+let should = chai.should();
 
-var apiRequest = {
+let apiRequest = {
   'method': 'POST',
   'url': 'http://localhost:3000/runCode',
   'headers': {
@@ -22,7 +22,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('output') ){
   
           expect(res.output).to.equal("Hello World!!");
@@ -38,7 +38,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('output') ){
   
           expect(res.output).to.equal("Hello World!!");
@@ -54,7 +54,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('output') ){
   
           expect(res.output).to.equal("Hello World!!");
@@ -70,7 +70,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('output') ){
   
           expect(res.output).to.equal("Hello World!!");
@@ -88,7 +88,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('output') ){
   
           expect(res.output).to.equal("11");
@@ -103,7 +103,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('output') ){
   
           expect(res.output).to.equal("Hello");
@@ -122,7 +122,7 @@ describe("POST Api /runCode", function() {
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
-        var res = JSON.parse(response.body);
+        let res = JSON.parse(response.body);
         if( res.should.have.property('Code_Compiled') ){
   
           expect(res.Code_Compiled).to.be.false;
@@ -141,7 +141,7 @@ describe("POST Api /runCode", function() {
     
     request(apiRequest, function (error, response) {
       if (error) throw new Error(error);
-      var res = JSON.parse(response.body);
+      let res = JSON.parse(response.body);
       if( res.should.have.property('Code_Compiled') ){
 
         expect(res.Code_Compiled).to.be.true;
@@ -165,11 +165,11 @@ describe("POST Api /runCode", function() {
  describe('Handling simultaneous requests', function() {
 	 
 	 it('10 Simultaneous Requests', function(done) {
-		for(var i=1;i<10;i++){
+		for(let i=1;i<10;i++){
 			let temp = i;
 			request(newCode(temp), function (error, response) {
 				if (error) throw new Error(error);
-				var res = JSON.parse(response.body);
+				let res = JSON.parse(response.body);
 				if( res.should.have.property('output') ){
 
 				expect(res.output).to.equal('' + temp);
@@ -179,7 +179,7 @@ describe("POST Api /runCode", function() {
 		}
 		request(newCode(0), function (error, response) {
 			if (error) throw new Error(error);
-			var res = JSON.parse(response.body);
+			let res = JSON.parse(response.body);
 			if( res.should.have.property('output') ){
 
 			expect(res.output).to.equal('' + 0);
