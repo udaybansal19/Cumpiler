@@ -1,9 +1,10 @@
 const { spawn } = require('child_process');
+var fs = require("fs");
 
-module.exports.runCode = function(input) {
+module.exports.runCode = function(input, id) {
 
   return new Promise( (resolve, reject) => {
-    var run = spawn('a.exe');
+    var run = spawn('./executables/' + id + '.exe');
     console.log("Code starting to run...");
 
     var codeResult = {
@@ -31,6 +32,12 @@ module.exports.runCode = function(input) {
         codeResult.status = false;
       else
         codeResult.status = true;
+      fs.unlink('./executables/' + id + '.exe', (err) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      });
       resolve(codeResult);
     });
 

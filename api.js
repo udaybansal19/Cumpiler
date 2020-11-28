@@ -4,33 +4,20 @@ const compileCode  = require("./compileC++.js");
 const runCode = require("./runC++.js");
 const routes = express.Router();
 
-const getCompileOutput = require('./compileC++').getCompileOutput;
-const getCodeOutput = require('./runC++').getCodeOutput;
-
-global.postApiFunc;
+var count = 0;
 
 routes.use(express.json());
-
-routes.get('/', (req, res) => {
-  return res.send('Received a GET HTTP method');
-});
  
 routes.post('/', postApiFuncUtil);
- 
-routes.put('/', (req, res) => {
-  return res.send('Received a PUT HTTP method');
-});
- 
-routes.delete('/', (req, res) => {
-  return res.send('Received a DELETE HTTP method');
-});
 
 async function postApiFuncUtil (req, res) {
   console.log("starting...");
-
-  await writeFile.writeCodeToFile(req.body.code, './codeFiles/test.cpp');
   
-  var compileResult = await compileCode.compileCode('./codeFiles/test.cpp');
+  var id = ++count;
+
+  await writeFile.writeCodeToFile(req.body.code, id);
+  
+  var compileResult = await compileCode.compileCode(id);
   
 
   console.log("Compile Result: " + compileResult.status);
@@ -38,7 +25,7 @@ async function postApiFuncUtil (req, res) {
 
   if(compileResult.status){
 
-    var codeOutput = await runCode.runCode(req.body.input);
+    var codeOutput = await runCode.runCode(req.body.input, id);
 
     if(codeOutput.status){
       reqOutput = {

@@ -1,13 +1,13 @@
 var fs = require("fs");
 
-module.exports.writeCodeToFile = function (data, filename){
+module.exports.writeCodeToFile = function (data, id){
    return new Promise( (resolve, reject) => {
-      fs.writeFile(filename, data , function(err) {
+      fs.writeFile('./codeFiles/' + id + '.cpp', data , function(err) {
          if (err) {
             console.error(err);
             reject();
          }
-         console.log("Data written successfully!");
+         console.log("Data written successfully");
          resolve();
       });
    });

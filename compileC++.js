@@ -1,9 +1,10 @@
 const { spawn } = require('child_process');
+var fs = require("fs");
 
-module.exports.compileCode = function(filename) {
+module.exports.compileCode = function(id) {
 
   return new Promise( (resolve, reject) => {
-    const gPlus = spawn('g++', [filename]);
+    const gPlus = spawn('g++', ['./codeFiles/' + id + '.cpp', '-o', './executables/' + id + '.exe']);
     console.log("G++ running...");
 
     var compileResult = {
@@ -20,6 +21,12 @@ module.exports.compileCode = function(filename) {
     gPlus.on('close', (code) => {
       compileResult.status = !code;
       console.log(`Code Compiled with code ${code}`);
+      fs.unlink('./codeFiles/' + id + '.cpp', (err) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      });
       resolve(compileResult);
     });
 
