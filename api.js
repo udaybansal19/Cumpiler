@@ -15,7 +15,7 @@ routes.get('/', (req, res) => {
   return res.send('Received a GET HTTP method');
 });
  
-routes.post('/', postApi);
+routes.post('/', postApiFuncUtil);
  
 routes.put('/', (req, res) => {
   return res.send('Received a PUT HTTP method');
@@ -25,29 +25,21 @@ routes.delete('/', (req, res) => {
   return res.send('Received a DELETE HTTP method');
 });
 
-function postApi(req,res) {
-  postApiFunc = postApiFuncUtil(req,res);
-  postApiFunc.next();
-}
-
-function* postApiFuncUtil (req, res) {
+async function postApiFuncUtil (req, res) {
   console.log("starting...");
 
-  writeFile.writeCodeToFile(req.body.code, 'test.cpp');
-  yield;
+  console.log(1);
+  await writeFile.writeCodeToFile(req.body.code, './codeFiles/test.cpp');
+  console.log(3);
+  var compileResult = await compileCode.compileCode('./codeFiles/test.cpp');
+  console.log(5);
 
-  compileCode.compileCode();
-
-  yield;
-
-  var compileResult = getCompileOutput();
-  console.log("Compile Result: " + compileResult.compileStatus);
-   var reqOutput;
+  console.log("Compile Result: " + compileResult.status);
+  var reqOutput;
 
   if(compileResult.compileStatus){
 
-    runCode.runCode(req.body.input);
-    yield;
+    var codeOutput = await runCode.runCode(req.body.input);
 
     var codeOutput = getCodeOutput();
 

@@ -1,36 +1,33 @@
 const { spawn } = require('child_process');
 
-var compileOutput;
-var compileStatus;
+module.exports.compileCode = function(filename) {
 
-module.exports.compileCode = function() {
-  
-  const gPlus = spawn('g++', ['./test.cpp']);
-  console.log("G++ running...");
+  return new Promise( (resolve, reject) => {
+    const gPlus = spawn('g++', [filename]);
+    console.log("G++ running...");
 
-  compileOutput = "";
+    var compileResult = {
+      status: false,
+      output: ""
+    };
 
-  gPlus.stderr.on('data', (data) => {
-    compileOutput += "" +  data; 
-    console.error(`stderr: ${data}`);
-  });
-  
-  gPlus.on('close', (code) => {
-    compileStatus = !code;
-    console.log(`Code Compiled with code ${code}`);
-    postApiFunc.next();
-  });
+    gPlus.stderr.on('data', (data) => {
+      compileResult.output += "" +  data;
+      reject(compileResult); 
+      console.error(`stderr: ${data}`);
+    });
+    
+    gPlus.on('close', (code) => {
+      compileResult.status = !code;
+      console.log(`Code Compiled with code ${code}`);
+      console.log(4);
+      resolve(compileResult);
+    });
 
-  gPlus.stdout.on('data', (data) => {
-    compileOutput += "" +  data; 
-    console.log(`stdout: ${data}`);
+    gPlus.stdout.on('data', (data) => {
+      compileResult.Output += "" +  data; 
+      console.log(`stdout: ${data}`);
+    });
   });
   
 }
-
-module.exports.getCompileOutput = function() {
-  return {
-    compileStatus: compileStatus,
-    compileOutput: compileOutput
-  };
-};
