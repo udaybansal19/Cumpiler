@@ -8,7 +8,6 @@ module.exports.writeCodeToFile = function (data, filename){
             reject();
          }
          console.log("Data written successfully!");
-         console.log(2);
          resolve();
       });
    });

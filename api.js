@@ -28,31 +28,28 @@ routes.delete('/', (req, res) => {
 async function postApiFuncUtil (req, res) {
   console.log("starting...");
 
-  console.log(1);
   await writeFile.writeCodeToFile(req.body.code, './codeFiles/test.cpp');
-  console.log(3);
+  
   var compileResult = await compileCode.compileCode('./codeFiles/test.cpp');
-  console.log(5);
+  
 
   console.log("Compile Result: " + compileResult.status);
   var reqOutput;
 
-  if(compileResult.compileStatus){
+  if(compileResult.status){
 
     var codeOutput = await runCode.runCode(req.body.input);
 
-    var codeOutput = getCodeOutput();
-
-    if(codeOutput.codeStatus){
+    if(codeOutput.status){
       reqOutput = {
-        Code_Compiled: compileResult.compileStatus,
-        codeStatus: codeOutput.codeStatus,
-        output: `${codeOutput.codeOutput}`,
+        Code_Compiled: compileResult.status,
+        codeStatus: codeOutput.status,
+        output: `${codeOutput.output}`,
       }
     }else{
       reqOutput = {
-        Code_Compiled: compileResult.compileStatus,
-        codeStatus: codeOutput.codeStatus,
+        Code_Compiled: compileResult.status,
+        codeStatus: codeOutput.status,
         message: "Code timed out",
       }
     }
@@ -60,11 +57,10 @@ async function postApiFuncUtil (req, res) {
 
   }else{
     reqOutput = {
-      Code_Compiled: compileResult.compileStatus,
-      error: compileResult.compileOutput,
+      Code_Compiled: compileResult.status,
+      error: compileResult.output,
     }
   }
-  
   
   return res.send(reqOutput);
 }

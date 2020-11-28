@@ -13,14 +13,13 @@ module.exports.compileCode = function(filename) {
 
     gPlus.stderr.on('data', (data) => {
       compileResult.output += "" +  data;
-      reject(compileResult); 
+      resolve(compileResult); 
       console.error(`stderr: ${data}`);
     });
     
     gPlus.on('close', (code) => {
       compileResult.status = !code;
       console.log(`Code Compiled with code ${code}`);
-      console.log(4);
       resolve(compileResult);
     });
 
