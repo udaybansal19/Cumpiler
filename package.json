@@ -8,6 +8,7 @@
     "url": "https://github.com/udaybansal19/Cumpiler.git"
   },
   "scripts": {
+    "start": "nodemon Src/server.js",
     "test": "mocha"
   },
   "author": "",

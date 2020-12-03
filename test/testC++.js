@@ -150,9 +150,9 @@ describe("POST Api /runCode", function() {
 
           expect(res.codeStatus).to.be.false;
 
-          if(res.should.have.property('message')){
+          if(res.should.have.property('error')){
 
-            expect(res.message).to.equal("Code timed out");
+            expect(res.error).to.equal("Code timed out");
 
             done();
           }
