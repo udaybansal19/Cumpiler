@@ -1,6 +1,6 @@
 const writeFile = require("./writeToFile.js");
 const compileCode  = require("./compileCode.js");
-const runCode = require("./runC++.js");
+const runCode = require("./runCode.js");
 
 let count = 0;
 
@@ -11,7 +11,7 @@ module.exports.handleCPlusPlus = async function(req,res) {
 
     await writeFile.writeCodeToFile(req.body.code, './codeFiles/' + id + '.cpp');
 
-    let compileResult = await compileCode.compilePlusPlus(id);
+    let compileResult = await compileCode.compileCPlusPlus(id);
 
 
     console.log("Compile Result: " + compileResult.status);
