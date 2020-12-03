@@ -11,30 +11,14 @@ let apiRequest = {
   }
 };
 
-describe("Test for C++ Code", function() {
+describe("Test for C Code", function() {
 
   this.timeout(12500);
 
   describe("Test for Hello World Code", function() {
     it("Default code", function (done) {
 
-      apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\"; \n}"})
-      
-      request(apiRequest, function (error, response) {
-        if (error) throw new Error(error);
-        let res = JSON.parse(response.body);
-        if( res.should.have.property('output') ){
-  
-          expect(res.output).to.equal("Hello World!!");
-          
-          done();
-        }
-      });
-    });
-
-    it("Check for <bits/stdc++.h>", function (done) {
-
-      apiRequest.body = JSON.stringify({"language":"c++","code":"#include<bits/stdc++.h> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\"; \n}"})
+      apiRequest.body = JSON.stringify({"language":"c","code":"#include<stdio.h> \n int main() { \n printf(\"Hello World!!\"); \n}"})
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
@@ -50,7 +34,7 @@ describe("Test for C++ Code", function() {
 
     it("Code returns 0", function (done) {
 
-      apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\";\n return 0; \n}"})
+      apiRequest.body = JSON.stringify({"language":"c","code":"#include<stdio.h> \n int main() { \n printf(\"Hello World!!\"); \n return 0; \n}"})
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
@@ -66,7 +50,7 @@ describe("Test for C++ Code", function() {
 
     it("Code returns 1", function (done) {
 
-      apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\"; \n return 1; \n}"})
+      apiRequest.body = JSON.stringify({"language":"c","code":"#include<stdio.h> \n int main() { \n printf(\"Hello World!!\"); \n return 1; \n}"})
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
@@ -84,7 +68,7 @@ describe("Test for C++ Code", function() {
   describe('Test for Inputs', function() {
 
     it('Single Line Integer Input', function(done) {
-      apiRequest.body = JSON.stringify({"language":"c++","input":"11\n","code":"#include<iostream> \n using namespace std; \n int main() { \n int n; \n cin>>n; \n cout<<n; \n}"})
+      apiRequest.body = JSON.stringify({"language":"c","input":"11\n","code":"#include<stdio.h> \n int main() { \n int n; \n   scanf(\"%d\", &n);  \n  printf(\"%d\",n); \n}"})
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
@@ -99,7 +83,7 @@ describe("Test for C++ Code", function() {
     });
 
     it('Single Line String Input without space', function(done) {
-      apiRequest.body = JSON.stringify({"language":"c++","input":"Hello\n","code":"#include<iostream> \n using namespace std; \n int main() { \n string n; \n cin>>n; \n cout<<n; \n}"})
+      apiRequest.body = JSON.stringify({"language":"c","input":"Hello\n","code":"#include<stdio.h> \n int main() { \n char n[20]; \n   gets(n);  \n  printf(\"%s\",n); \n}"})
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
@@ -118,7 +102,7 @@ describe("Test for C++ Code", function() {
   describe('Compile error', function() {
     it("Test for compile time error", function (done) {
 
-      apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostrem> \n using namespace std; \n int main() { \n cout<<\"Hello World!!\"; \n}"})
+      apiRequest.body = JSON.stringify({"language":"c","code":"#include<stdio.h> \n int main() { \n   printf(\"Hello World\") \n}"})
       
       request(apiRequest, function (error, response) {
         if (error) throw new Error(error);
@@ -137,7 +121,7 @@ describe("Test for C++ Code", function() {
  describe('Runtime Error', function() {
   it("Test for code time out ", function (done) {
 
-    apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n while(1); \n}"})
+    apiRequest.body = JSON.stringify({"language":"c","code":"#include<stdio.h> \n int main() { \n while(1); \n}"})
     
     request(apiRequest, function (error, response) {
       if (error) throw new Error(error);
@@ -199,7 +183,7 @@ function newCode(seed){
 		'headers': {
 		  'Content-Type': 'application/json'
 		}
-	  };
-	apiRequest.body = JSON.stringify({"language":"c++","code":"#include<iostream> \n using namespace std; \n int main() { \n cout<<" + seed + "; \n}"});
+    };
+  apiRequest.body = JSON.stringify({"language":"c","code":"#include<stdio.h> \n int main() { \n printf(\"" + seed + "\"); \n}"})
 	return apiRequest;  
 }
