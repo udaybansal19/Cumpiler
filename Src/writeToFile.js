@@ -1,8 +1,8 @@
 let fs = require("fs");
 
-module.exports.writeCodeToFile = function (data, id){
+module.exports.writeCodeToFile = function (data, filename){
    return new Promise( (resolve, reject) => {
-      fs.writeFile('./codeFiles/' + id + '.cpp', data , function(err) {
+      fs.writeFile(filename, data , function(err) {
          if (err) {
             console.error(err);
             reject();

@@ -9,7 +9,7 @@ module.exports.handleCPlusPlus = async function(req,res) {
   
     let id = ++count;
 
-    await writeFile.writeCodeToFile(req.body.code, id);
+    await writeFile.writeCodeToFile(req.body.code, './codeFiles/' + id + '.cpp');
 
     let compileResult = await compileCode.compileCode(id);
 
@@ -51,7 +51,7 @@ module.exports.handleC = async function(req,res) {
   
     let id = ++count;
 
-    await writeFile.writeCodeToFile(req.body.code, id);
+    await writeFile.writeCodeToFile(req.body.code, './codeFiles/' + id + '.c');
 
     let compileResult = await compileCode.compileCode(id);
 
