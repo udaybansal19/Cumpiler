@@ -1,7 +1,14 @@
+
+# Code File extensions
+*.c
 *.cpp
+*.py
+*.java
 *.exe
+
 *.out
 *.txt
 *.log
+
 node_modules
 package-lock.json
