@@ -19,7 +19,7 @@ module.exports.handleCPlusPlus = async function(req,res) {
 
     if(compileResult.status){
 
-    let codeOutput = await runCode.runCode(req.body.input, id);
+    let codeOutput = await runCode.runExe(req.body.input, id);
 
     if(codeOutput.status){
         reqOutput = {
@@ -61,7 +61,7 @@ module.exports.handleC = async function(req,res) {
 
     if(compileResult.status){
 
-    let codeOutput = await runCode.runCode(req.body.input, id);
+    let codeOutput = await runCode.runExe(req.body.input, id);
 
     if(codeOutput.status){
         reqOutput = {
@@ -88,3 +88,28 @@ module.exports.handleC = async function(req,res) {
     return res.send(reqOutput);
 }
 
+module.exports.handlePython = async function(req,res) {
+    console.log("Starting for Python");
+  
+    let id = ++count;
+
+    await writeFile.writeCodeToFile(req.body.code, './codeFiles/' + id + '.py');
+
+    let reqOutput;
+
+    let codeOutput = await runCode.runPythonScript(req.body.input, './codeFiles/' + id + '.py');
+
+    if(codeOutput.status){
+        reqOutput = {
+        codeStatus: codeOutput.status,
+        output: `${codeOutput.output}`,
+        }
+    }else{
+        reqOutput = {
+        codeStatus: codeOutput.status,
+        error: codeOutput.output,
+        }
+    }
+
+    return res.send(reqOutput);
+}

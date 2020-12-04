@@ -16,11 +16,15 @@ function postApiFuncUtil (req, res) {
   }
   switch(req.body.language){
     case 'c++':
-      codeController.handleCPlusPlus(req,res);
+      codeController.handleCPlusPlus(req, res);
       break;
     
     case 'c':
-      codeController.handleC(req,res);
+      codeController.handleC(req, res);
+      break;
+
+    case 'python':
+      codeController.handlePython(req, res);
       break;
 
     default:
