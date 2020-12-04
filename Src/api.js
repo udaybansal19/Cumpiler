@@ -23,7 +23,14 @@ function postApiFuncUtil (req, res) {
       codeController.handleC(req,res);
       break;
 
+    default:
+      let errorMsg = { error: req.body.language + ' is not supported'};
+      res.send(errorMsg);
+      break;
+
   }
+
+  return;
 }
 
 module.exports = routes;
