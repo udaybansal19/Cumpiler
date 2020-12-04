@@ -13,7 +13,7 @@ let apiRequest = {
 
 describe("Test for C++ Code", function() {
 
-  this.timeout(12500);
+  this.timeout(14000);
 
   describe("Test for Hello World Code", function() {
     it("Default code", function (done) {
